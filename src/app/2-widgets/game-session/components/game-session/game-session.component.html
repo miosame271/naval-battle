@@ -1,0 +1,8 @@
+<div class="area">
+  <app-area [editable]="!gameStarted()"></app-area>
+</div>
+<div class="buttons">
+  @if (!gameStarted()) {
+    <button (click)="start()">Начать игру</button>
+  }
+</div>
