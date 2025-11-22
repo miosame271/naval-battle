@@ -1,0 +1,20 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all HTML files:
+**/*.html
+
+# Ignore non dev files
+angular.json
+package-lock.json
+package.json
+prettierrc.json
+README.md
+server.ts
+tsconfig.app.json
+tsconfig.json
+tsconfig.spec.json
+src/main.server.ts
+src/main.ts
+src/styles.scss
