@@ -8,10 +8,7 @@
   </div>
   <div class="ships-container">
     @for (ship of ships; track $index) {
-      <div class="ship"
-      [className]="'size-' + ship.size"
-      [ngClass]="{ 'horizontal': ship.orientation === Orientations.Horizontal, 'vertical': ship.orientation === Orientations.Vertical }"
-      [ngStyle]="{ top: ship.start.row * 30 - 30 + 'px', left: ship.start.ceil * 30 - 30 + 'px' }"></div>
+      <app-ship [ship]="ship" [ngStyle]="{ top: ship.start.row * 30 - 30 + 'px', left: ship.start.ceil * 30 - 30 + 'px' }"></app-ship>
     }
   </div>
 } @else {

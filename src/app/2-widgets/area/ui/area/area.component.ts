@@ -1,10 +1,11 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { Field, Orientations, Ship, Sizes } from '@entities/model';
+import { ShipComponent } from '@entities/ui';
 
 @Component({
   selector: 'app-area',
-  imports: [NgClass, NgStyle],
+  imports: [NgClass, NgStyle, ShipComponent],
   templateUrl: './area.component.html',
   styleUrl: './area.component.scss',
   standalone: true,
@@ -15,8 +16,6 @@ export class AreaComponent implements OnInit {
   fields: Field[] = [];
   ships: Ship[] = [];
   loading = signal(true);
-
-  Orientations = Orientations;
 
   ngOnInit(): void {
     this.createNewArea();
