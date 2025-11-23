@@ -25,9 +25,12 @@
   background-color: #fff;
   box-sizing: border-box;
   cursor: default;
+  position: relative;
+  z-index: -1;
 
-  &.editable {
+  &.clickable {
     cursor: pointer;
+    z-index: 5;
 
     &:hover,
     &:active {
@@ -57,4 +60,6 @@
   border-right: 1px solid #aaa;
   width: 300px;
   height: 300px;
+  position: relative;
+  z-index: 1;
 }

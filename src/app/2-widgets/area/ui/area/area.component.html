@@ -2,7 +2,7 @@
   <div class="area">
     @for (field of fields; track $index) {
       <button class="field"
-      [ngClass]="{'editable': editable, 'has-ship': field.hasShip, 'is-hit': field.isHit}"
+      [ngClass]="{'clickable': !editable, 'has-ship': field.hasShip, 'is-hit': field.isHit}"
       (click)="processClick($index)"></button>
     }
   </div>

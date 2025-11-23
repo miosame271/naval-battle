@@ -20,8 +20,8 @@ export class AreaComponent implements OnInit {
   }
 
   processClick(index: number): void {
-    if (this.editable) {
-      this.toggleShip(index);
+    if (!this.editable) {
+      this.fire(index);
     }
   }
 
@@ -41,10 +41,12 @@ export class AreaComponent implements OnInit {
     this.loading.set(false);
   }
 
-  private toggleShip(index: number): void {
+  private fire(index: number): void {
     const field = this.fields[index];
 
-    field.hasShip = !field.hasShip;
-    this.fields[index] = field;
+    if (!field.isHit) {
+      field.isHit = true;
+      this.fields[index] = field;
+    }
   }
 }
