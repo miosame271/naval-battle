@@ -9,5 +9,4 @@ import { GameSessionComponent } from '@widgets/game-session';
   styleUrl: './app.component.scss',
   standalone: true,
 })
-export class AppComponent {
-}
+export class AppComponent {}

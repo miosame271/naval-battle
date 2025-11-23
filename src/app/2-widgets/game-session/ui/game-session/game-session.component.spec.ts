@@ -11,9 +11,8 @@ describe('GameSessionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameSessionComponent ]
-    })
-    .compileComponents();
+      declarations: [GameSessionComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

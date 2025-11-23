@@ -6,7 +6,7 @@ import { AreaComponent } from '@widgets/area';
   templateUrl: './game-session.component.html',
   styleUrls: ['./game-session.component.scss'],
   imports: [AreaComponent],
-  standalone: true
+  standalone: true,
 })
 export class GameSessionComponent {
   gameStarted = signal(false);

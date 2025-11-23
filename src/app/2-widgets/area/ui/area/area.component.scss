@@ -1,5 +1,9 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
 }
 
 .field {
@@ -62,4 +66,56 @@
   height: 300px;
   position: relative;
   z-index: 1;
+}
+
+.ships-container {
+  position: relative;
+  border: 1px solid #aaa;
+  width: 300px;
+  height: 300px;
+}
+
+.ship {
+  position: absolute;
+  background: blue;
+
+  &.horizontal {
+    height: 30px;
+
+    &.size-1 {
+      width: 30px;
+    }
+
+    &.size-2 {
+      width: 60px;
+    }
+
+    &.size-3 {
+      width: 90px;
+    }
+
+    &.size-4 {
+      width: 120px;
+    }
+  }
+
+  &.vertical {
+    width: 30px;
+
+    &.size-1 {
+      height: 30px;
+    }
+
+    &.size-2 {
+      height: 60px;
+    }
+
+    &.size-3 {
+      height: 90px;
+    }
+
+    &.size-4 {
+      height: 120px;
+    }
+  }
 }
