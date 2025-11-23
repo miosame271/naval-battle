@@ -1,1 +1,1 @@
-export * from './ship/ship.component'
+export * from './ship/ship.component';

@@ -7,7 +7,7 @@ import { Orientations, Ship } from '@entities/model';
   templateUrl: './ship.component.html',
   styleUrls: ['./ship.component.scss'],
   imports: [NgClass],
-  standalone: true
+  standalone: true,
 })
 export class ShipComponent {
   @Input() ship!: Ship;
