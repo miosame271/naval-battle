@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Orientations, Ship } from '@entities/model';
+import { Orientations, Ship } from '@entities/game/model';
 
 @Component({
   selector: 'app-ship',

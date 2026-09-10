@@ -1,6 +1,6 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { Field, Orientations, Ship, Sizes } from '@entities/model';
+import { Field, Orientations, Ship, Sizes } from '@entities/game/model';
 import { ShipComponent } from '@entities/ui';
 
 @Component({
