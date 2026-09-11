@@ -1,7 +1,7 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
+import { ShipComponent } from '@entities/game';
 import { Field, Orientations, Ship, Sizes } from '@entities/game/model';
-import { ShipComponent } from '@entities/ui';
 
 @Component({
   selector: 'app-area',

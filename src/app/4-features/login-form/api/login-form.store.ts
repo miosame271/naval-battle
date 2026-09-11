@@ -10,16 +10,13 @@ import {
   LoginCredentials,
   LoginFormState,
 } from '@entities/auth';
+import { AuthenticationApiService } from '@entities/auth/model';
 
 const defaultState: LoginFormState = {
   status: AuthenticationStatus.Idle,
   error: null,
   isLogged: false,
 };
-
-export interface AuthenticationApiService {
-  login(credentials: LoginCredentials): Promise<void>;
-}
 
 export const AUTHENTICATION_API_SERVICE =
   new InjectionToken<AuthenticationApiService>('AUTHENTICATION_API_SERVICE');
@@ -89,6 +86,8 @@ export class LoginFormStore {
         error: errorMessage,
         isLogged: false,
       });
+
+      console.error(error);
     }
   }
 }
