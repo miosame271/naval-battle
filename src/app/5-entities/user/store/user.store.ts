@@ -1,7 +1,7 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { User } from '../model';
-import { UserService } from './user.service';
 import { firstValueFrom } from 'rxjs';
+import { UserService } from '../api';
 
 @Injectable({
   providedIn: 'root',
