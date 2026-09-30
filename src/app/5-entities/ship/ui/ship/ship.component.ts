@@ -7,12 +7,7 @@ import {
   Signal,
   WritableSignal,
 } from '@angular/core';
-import {
-  Ship,
-  ShipDirection,
-  ShipPosition,
-  ShipStatus,
-} from '@entities/ship/model/ship.interface';
+import { Ship, ShipDirection, ShipPosition, ShipStatus } from '@entities/ship';
 
 @Component({
   selector: 'app-ship',
