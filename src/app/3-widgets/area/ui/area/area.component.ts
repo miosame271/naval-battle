@@ -1,7 +1,14 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, Input, OnInit, signal } from '@angular/core';
-import { ShipComponent } from '@entities/game';
-import { Field, Orientations, Ship, Sizes } from '@entities/game/model';
+import {
+  Component,
+  inject,
+  Input,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { Ship, ShipComponent } from '@entities/ship';
+import { CreateShipsService } from '@features/create-ships';
 
 @Component({
   selector: 'app-area',
@@ -13,90 +20,46 @@ import { Field, Orientations, Ship, Sizes } from '@entities/game/model';
 export class AreaComponent implements OnInit {
   @Input() editable = true;
 
-  fields: Field[] = [];
-  ships: Ship[] = [];
-  loading = signal(true);
+  private readonly _createShipsService = inject(CreateShipsService);
+
+  // fields: Field[] = [];
+  fields: WritableSignal<unknown[]> = signal([]);
+  ships: WritableSignal<Ship[]> = signal([]);
+  loading: WritableSignal<boolean> = signal(true);
 
   ngOnInit(): void {
-    this.createNewArea();
-    this.createNewShips();
+    this._createNewArea();
+    this._createNewShips();
 
     this.loading.set(false);
   }
 
   processClick(index: number): void {
     if (!this.editable) {
-      this.fire(index);
+      this._fire(index);
     }
   }
 
-  private createNewArea(): void {
-    for (let i = 1; i <= 10; i++) {
-      for (let j = 1; j <= 10; j++) {
-        this.fields.push({
-          position: {
-            row: i,
-            ceil: j,
-          },
-          hasShip: false,
-          isHit: false,
-        });
-      }
-    }
+  private _createNewArea(): void {
+    // for (let i = 1; i <= 10; i++) {
+    //   for (let j = 1; j <= 10; j++) {
+    //     this.fields.push({
+    //       position: {
+    //         row: i,
+    //         column: j,
+    //       },
+    //       hasShip: false,
+    //       isHit: false,
+    //     });
+    //   }
+    // }
   }
 
-  private createNewShips(): void {
-    this.ships.push({
-      start: {
-        row: 2,
-        ceil: 2,
-      },
-      orientation: Orientations.Vertical,
-      size: Number(Sizes.Large),
-      hit: [],
-    });
-    for (let i = 1; i <= 2; i++) {
-      this.ships.push({
-        start: {
-          row: 2,
-          ceil: 2 + i * 2,
-        },
-        orientation: Orientations.Vertical,
-        size: Number(Sizes.Medium),
-        hit: [],
-      });
-    }
-    for (let i = 1; i <= 3; i++) {
-      this.ships.push({
-        start: {
-          row: 7,
-          ceil: 0 + i * 2,
-        },
-        orientation: Orientations.Vertical,
-        size: Number(Sizes.Small),
-        hit: [],
-      });
-    }
-
-    for (let i = 1; i <= 4; i++) {
-      this.ships.push({
-        start: {
-          row: 0 + i * 2,
-          ceil: 8,
-        },
-        orientation: Orientations.Vertical,
-        size: Number(Sizes.XSmall),
-        hit: [],
-      });
-    }
+  private _createNewShips(): void {
+    this.ships.set(this._createShipsService.createShips());
   }
 
-  private fire(index: number): void {
-    const field = this.fields[index];
-
-    if (!field.isHit) {
-      field.isHit = true;
-      this.fields[index] = field;
-    }
+  private _fire(index: number): void {
+    // TODO ship.hit(position);
   }
 }

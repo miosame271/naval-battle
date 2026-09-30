@@ -1,1 +1,1 @@
-export * from './area/area.component';
+export * from './area';

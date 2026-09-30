@@ -1,14 +1,13 @@
 @if (!loading()) {
   <div class="area">
-    @for (field of fields; track $index) {
+    @for (field of fields(); track $index) {
       <button class="field"
-      [ngClass]="{'clickable': !editable, 'has-ship': field.hasShip, 'is-hit': field.isHit}"
       (click)="processClick($index)"></button>
     }
   </div>
   <div class="ships-container">
-    @for (ship of ships; track $index) {
-      <app-ship [ship]="ship" [ngStyle]="{ top: ship.start.row * 30 - 30 + 'px', left: ship.start.ceil * 30 - 30 + 'px' }"></app-ship>
+    @for (ship of ships(); track $index) {
+      <app-ship [ship]="ship" [ngStyle]="{ top: ship.startPosition.row * 30 - 30 + 'px', left: ship.startPosition.column * 30 - 30 + 'px' }"></app-ship>
     }
   </div>
 } @else {
