@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  Input,
+  input,
   OnInit,
   signal,
   WritableSignal,
@@ -20,7 +20,7 @@ import { CreateShipsService } from '@features/create-ships';
   standalone: true,
 })
 export class AreaComponent implements OnInit {
-  @Input() editable = true;
+  readonly editable = input.required<boolean>();
 
   private readonly _shipService = inject(ShipService);
   private readonly _createShipsService = inject(CreateShipsService);

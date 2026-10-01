@@ -31,25 +31,27 @@ export class ShipService {
   }
 
   public updateStatus(ship: Ship): Ship {
+    const changedShip = { ...ship };
     if (ship.hitPositions.length === 0) {
-      ship.status = ShipStatus.Intact;
+      changedShip.status = ShipStatus.Intact;
     } else if (
       ship.hitPositions.length > 0 &&
       ship.hitPositions.length < ship.size
     ) {
-      ship.status = ShipStatus.Damaged;
+      changedShip.status = ShipStatus.Damaged;
     } else if (ship.hitPositions.length === ship.size) {
-      ship.status = ShipStatus.Destroyed;
+      changedShip.status = ShipStatus.Destroyed;
     }
-    return { ...ship };
+    return changedShip;
   }
 
   public rotate(ship: Ship): Ship {
-    ship.direction =
+    const changedShip = { ...ship };
+    changedShip.direction =
       ship.direction === ShipDirection.Horizontal
         ? ShipDirection.Vertical
         : ShipDirection.Horizontal;
-    return { ...ship };
+    return changedShip;
   }
 
   public fire(position: ShipPosition): void {

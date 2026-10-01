@@ -1,4 +1,4 @@
-@if (!loading()) {
+
   <div class="area">
     @for (field of fields(); track $index) {
       <button class="field"
@@ -10,6 +10,4 @@
       <app-ship [ship]="ship" [ngStyle]="{ top: ship.startPosition.row * 30 - 30 + 'px', left: ship.startPosition.column * 30 - 30 + 'px' }"></app-ship>
     }
   </div>
-} @else {
-  <p>Загружается...</p>
-}
+
