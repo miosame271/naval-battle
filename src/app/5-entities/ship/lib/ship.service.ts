@@ -5,12 +5,13 @@ import {
   ShipSize,
   ShipConfig,
   ShipStatus,
+  ShipPosition,
 } from '@entities/ship';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CreateShipsService {
+export class ShipService {
   constructor() {}
 
   public createShips(): Ship[] {
@@ -68,6 +69,47 @@ export class CreateShipsService {
       smallShip3,
       smallShip4,
     ];
+  }
+
+  public isPositionHit(ship: Ship, position: ShipPosition): boolean {
+    return ship.hitPositions.some(
+      (hitPosition) =>
+        hitPosition.row === position.row &&
+        hitPosition.column === position.column,
+    );
+  }
+
+  public updateStatus(ship: Ship): Ship {
+    if (ship.hitPositions.length === 0) {
+      ship.status = ShipStatus.Intact;
+    } else if (
+      ship.hitPositions.length > 0 &&
+      ship.hitPositions.length < ship.size
+    ) {
+      ship.status = ShipStatus.Damaged;
+    } else if (ship.hitPositions.length === ship.size) {
+      ship.status = ShipStatus.Destroyed;
+    }
+    return ship;
+  }
+
+  public rotate(ship: Ship): Ship {
+    ship.direction =
+      ship.direction === ShipDirection.Horizontal
+        ? ShipDirection.Vertical
+        : ShipDirection.Horizontal;
+    return ship;
+  }
+
+  public fire(position: ShipPosition): void {
+    // TODO: Implement fire logic
+  }
+
+  public hit(ship: Ship, position: ShipPosition): Ship {
+    if (!this.isPositionHit(ship, position)) {
+      ship.hitPositions.push(position);
+    }
+    return this.updateStatus(ship);
   }
 
   private _createShip(config: ShipConfig): Ship {

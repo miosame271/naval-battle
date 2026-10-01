@@ -1,21 +1,32 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
-  Input,
   linkedSignal,
   Signal,
-  WritableSignal,
 } from '@angular/core';
-import { Ship, ShipDirection, ShipPosition, ShipStatus } from '@entities/ship';
+import {
+  Ship,
+  ShipDirection,
+  ShipPosition,
+  ShipService,
+  ShipStatus,
+} from '@entities/ship';
 
 @Component({
   selector: 'app-ship',
   templateUrl: './ship.component.html',
   styleUrls: ['./ship.component.scss'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ShipComponent {
   readonly ship = input.required<Ship>();
+
+  private readonly _shipService = inject(ShipService);
 
   private readonly _ship = linkedSignal<Ship>(this.ship);
 
@@ -34,45 +45,7 @@ export class ShipComponent {
     () => this._ship().hitPositions,
   );
 
-  constructor() {}
-
-  public rotate(): void {
-    const currentShip = this._ship();
-    currentShip.direction =
-      currentShip.direction === ShipDirection.Horizontal
-        ? ShipDirection.Vertical
-        : ShipDirection.Horizontal;
-    this._ship.set(currentShip);
-  }
-
-  public hit(position: ShipPosition): void {
-    const currentShip = this._ship();
-    if (!this._isPositionHit(position)) {
-      currentShip.hitPositions.push(position);
-    }
-    this._updateStatus();
-  }
-
-  private _isPositionHit(position: ShipPosition): boolean {
-    return this.hitPositions().some(
-      (hitPosition) =>
-        hitPosition.row === position.row &&
-        hitPosition.column === position.column,
-    );
-  }
-
-  private _updateStatus(): void {
-    const currentShip = this._ship();
-    if (currentShip.hitPositions.length === 0) {
-      currentShip.status = ShipStatus.Intact;
-    } else if (
-      currentShip.hitPositions.length > 0 &&
-      currentShip.hitPositions.length < currentShip.size
-    ) {
-      currentShip.status = ShipStatus.Damaged;
-    } else if (currentShip.hitPositions.length === currentShip.size) {
-      currentShip.status = ShipStatus.Destroyed;
-    }
-    this._ship.set(currentShip);
+  public fire(position: ShipPosition): void {
+    this._shipService.fire(position);
   }
 }

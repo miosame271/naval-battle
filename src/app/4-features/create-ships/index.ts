@@ -1,1 +1,1 @@
-export * from './create-ships.service';
+export * from '../../5-entities/ship/lib/ship.service';

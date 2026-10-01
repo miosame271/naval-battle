@@ -1,5 +1,6 @@
 import { NgClass, NgStyle } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   inject,
   Input,
@@ -7,20 +8,20 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { Ship, ShipComponent } from '@entities/ship';
-import { CreateShipsService } from '@features/create-ships';
+import { Ship, ShipComponent, ShipService } from '@entities/ship';
 
 @Component({
   selector: 'app-area',
   imports: [NgClass, NgStyle, ShipComponent],
   templateUrl: './area.component.html',
   styleUrl: './area.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class AreaComponent implements OnInit {
   @Input() editable = true;
 
-  private readonly _createShipsService = inject(CreateShipsService);
+  private readonly _shipService = inject(ShipService);
 
   // fields: Field[] = [];
   fields: WritableSignal<unknown[]> = signal([]);
@@ -29,14 +30,15 @@ export class AreaComponent implements OnInit {
 
   ngOnInit(): void {
     this._createNewArea();
-    this._createNewShips();
+    this.ships.set(this._shipService.createShips());
 
     this.loading.set(false);
   }
 
+  // TODO перевеси позицию мышки в ShipPosition
   processClick(index: number): void {
     if (!this.editable) {
-      this._fire(index);
+      this._shipService.fire({ row: 1, column: 1 });
     }
   }
 
@@ -53,13 +55,5 @@ export class AreaComponent implements OnInit {
     //     });
     //   }
     // }
-  }
-
-  private _createNewShips(): void {
-    this.ships.set(this._createShipsService.createShips());
-  }
-
-  private _fire(index: number): void {
-    // TODO ship.hit(position);
   }
 }
