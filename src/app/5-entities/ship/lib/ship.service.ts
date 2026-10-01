@@ -22,6 +22,17 @@ export class ShipService {
     };
   }
 
+  public getShipCells(shipConfig: ShipConfig): ShipPosition[] {
+    return Array.from({ length: shipConfig.size }, (_, index) => ({
+      row:
+        shipConfig.startPosition.row +
+        (shipConfig.direction === ShipDirection.Vertical ? index : 0),
+      column:
+        shipConfig.startPosition.column +
+        (shipConfig.direction === ShipDirection.Horizontal ? index : 0),
+    }));
+  }
+
   public isPositionHit(ship: Ship, position: ShipPosition): boolean {
     return ship.hitPositions.some(
       (hitPosition) =>
@@ -59,9 +70,10 @@ export class ShipService {
   }
 
   public hit(ship: Ship, position: ShipPosition): Ship {
-    if (!this.isPositionHit(ship, position)) {
-      ship.hitPositions.push(position);
+    const changedShip = { ...ship };
+    if (!this.isPositionHit(changedShip, position)) {
+      changedShip.hitPositions.push(position);
     }
-    return this.updateStatus(ship);
+    return this.updateStatus(changedShip);
   }
 }

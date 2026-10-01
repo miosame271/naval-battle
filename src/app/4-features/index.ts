@@ -1,2 +1,3 @@
-export * from './create-ships';
 export * from './login-form';
+export * from './random-ship';
+export * from './ships-collection';

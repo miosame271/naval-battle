@@ -4,10 +4,10 @@ import {
   computed,
   inject,
   input,
+  output,
   Signal,
 } from '@angular/core';
 import { Ship, ShipDirection, ShipPosition, ShipStatus } from '../../model';
-import { ShipService } from '../../lib';
 
 @Component({
   selector: 'app-ship',
@@ -19,8 +19,7 @@ import { ShipService } from '../../lib';
 })
 export class ShipComponent {
   readonly ship = input.required<Ship>();
-
-  private readonly _shipService = inject(ShipService);
+  protected readonly _shipFired = output<ShipPosition>();
 
   public readonly id: Signal<string> = computed(() => this.ship().id);
   public readonly size: Signal<number> = computed(() => this.ship().size);
@@ -38,6 +37,6 @@ export class ShipComponent {
   );
 
   public fire(position: ShipPosition): void {
-    this._shipService.fire(position);
+    this._shipFired.emit(position);
   }
 }
