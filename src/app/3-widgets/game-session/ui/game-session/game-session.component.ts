@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Signal,
+} from '@angular/core';
 import { AreaComponent } from '@widgets/area';
+import { GameSessionStore } from '@widgets/game-session';
 
 @Component({
   selector: 'app-game-session',
@@ -10,9 +16,11 @@ import { AreaComponent } from '@widgets/area';
   standalone: true,
 })
 export class GameSessionComponent {
-  gameStarted = signal(false);
+  private readonly _gameSessionStore = inject(GameSessionStore);
+
+  gameStarted: Signal<boolean> = this._gameSessionStore.gameStarted;
 
   start(): void {
-    this.gameStarted.set(true);
+    this._gameSessionStore.setGameStarted(true);
   }
 }

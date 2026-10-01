@@ -9,6 +9,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { Ship, ShipComponent, ShipService } from '@entities/ship';
+import { CreateShipsService } from '@features/create-ships';
 
 @Component({
   selector: 'app-area',
@@ -22,17 +23,15 @@ export class AreaComponent implements OnInit {
   @Input() editable = true;
 
   private readonly _shipService = inject(ShipService);
+  private readonly _createShipsService = inject(CreateShipsService);
 
-  // fields: Field[] = [];
+  // TODO завести entity для поля, чтобы не использовать unknown
   fields: WritableSignal<unknown[]> = signal([]);
   ships: WritableSignal<Ship[]> = signal([]);
-  loading: WritableSignal<boolean> = signal(true);
 
   ngOnInit(): void {
     this._createNewArea();
-    this.ships.set(this._shipService.createShips());
-
-    this.loading.set(false);
+    this.ships.set(this._createShipsService.createRandomShips());
   }
 
   // TODO перевеси позицию мышки в ShipPosition
@@ -42,6 +41,7 @@ export class AreaComponent implements OnInit {
     }
   }
 
+  // TODO вынести в отдельный сервис
   private _createNewArea(): void {
     // for (let i = 1; i <= 10; i++) {
     //   for (let j = 1; j <= 10; j++) {
