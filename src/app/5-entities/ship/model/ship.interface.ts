@@ -16,7 +16,7 @@ export const ShipSize = {
   Big: 3,
   Medium: 2,
   Small: 1,
-};
+} as const;
 export type ShipSize = (typeof ShipSize)[keyof typeof ShipSize];
 
 export interface ShipPosition {

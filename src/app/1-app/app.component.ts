@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GameSessionComponent } from '@widgets/game-session';
 
 @Component({
@@ -6,6 +6,7 @@ import { GameSessionComponent } from '@widgets/game-session';
   imports: [GameSessionComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class AppComponent {}
