@@ -1,14 +1,6 @@
 import { DestroyRef, Injectable, inject } from '@angular/core';
 import Keycloak, { KeycloakLoginOptions } from 'keycloak-js';
-import {
-  Observable,
-  from,
-  take,
-  map,
-  catchError,
-  throwError,
-  distinctUntilChanged,
-} from 'rxjs';
+import { Observable, from, map, catchError, throwError } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthenticationResult } from '../model';
 
@@ -24,7 +16,6 @@ export class AuthKeycloakService {
   ): Observable<AuthenticationResult> {
     return from(this.keycloak.login(options)).pipe(
       takeUntilDestroyed(this.destroyRef),
-      distinctUntilChanged(),
       map(() => this.getAuthenticationResult()),
       catchError((error: unknown) => throwError(() => error)),
     );
@@ -33,7 +24,6 @@ export class AuthKeycloakService {
   public refreshToken(minValidity = 30): Observable<AuthenticationResult> {
     return from(this.keycloak.updateToken(minValidity)).pipe(
       takeUntilDestroyed(this.destroyRef),
-      distinctUntilChanged(),
       map(() => this.getAuthenticationResult()),
       catchError((error: unknown) => throwError(() => error)),
     );

@@ -11,8 +11,8 @@ export interface LoginFormState {
 }
 
 export interface LoginCredentials {
-  readonly login: string;
-  readonly password: string;
+  login: string;
+  password: string;
 }
 
 export const AuthenticationStatus = {

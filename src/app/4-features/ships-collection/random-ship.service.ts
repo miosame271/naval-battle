@@ -65,7 +65,7 @@ export class RandomShipService {
     const maxAttempts = 100;
 
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-      const candidateConfig = this.createRandomShipConfig(ship);
+      const candidateConfig = this.createRandomShipConfig({ size: ship.size });
 
       if (this._placeShipService.canPlaceShip(candidateConfig, existingShips)) {
         return this._shipService.createShip(candidateConfig);
