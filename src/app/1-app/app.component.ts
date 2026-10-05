@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { GameSessionComponent } from '@widgets/game-session';
+import { GameSessionComponent } from '@pages/game-session';
 
 @Component({
   selector: 'app-root',

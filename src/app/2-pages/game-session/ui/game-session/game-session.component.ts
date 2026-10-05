@@ -4,14 +4,14 @@ import {
   inject,
   Signal,
 } from '@angular/core';
-import { AreaComponent } from '@widgets/area';
-import { GameSessionStore } from '@widgets/game-session';
+import { GameSessionStore } from '../../store/game-session.store';
+import { UserBoardComponent } from '@widgets/user-board';
 
 @Component({
   selector: 'app-game-session',
   templateUrl: './game-session.component.html',
   styleUrls: ['./game-session.component.scss'],
-  imports: [AreaComponent],
+  imports: [UserBoardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })

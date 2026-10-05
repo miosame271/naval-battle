@@ -1,2 +1,1 @@
-export * from './area';
-export * from './game-session';
+export * from './user-board';
