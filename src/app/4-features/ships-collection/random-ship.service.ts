@@ -6,8 +6,8 @@ import {
   ShipPosition,
   Ship,
   ShipConfig,
-  ShipService,
 } from '@entities/ship';
+import { ShipService } from '@entities/ship/lib/ship.service';
 import { PlaceShipService } from '@features/ships-collection';
 import { UtilsService } from '@shared/lib';
 
@@ -42,32 +42,36 @@ export class RandomShipService {
   }
 
   public repositionShipsRandomly(ships: Ship[]): Ship[] {
-    return this._randomizeShips(ships);
-  }
+    const repositionedShips: Ship[] = [];
 
-  public _randomizeShips(ships: Ship[]): Ship[] {
-    const repositionedShips: Ship[] = [...ships];
-
-    repositionedShips.forEach((ship) => {
+    ships.forEach((ship) => {
       const candidate = this._createValidCandidateShip(ship, repositionedShips);
+
+      if (!candidate) {
+        throw new Error(
+          `Unable to reposition ship with id ${ship.id} after multiple attempts.`,
+        );
+      }
       repositionedShips.push(candidate);
     });
 
     return repositionedShips;
   }
 
-  private _createValidCandidateShip(ship: Ship, existingShips: Ship[]): Ship {
-    const candidateConfig = this.createRandomShipConfig(ship);
-    const isValid = this._placeShipService.canPlaceShip(
-      candidateConfig,
-      existingShips.filter((s) => s.id !== ship.id),
-    );
+  private _createValidCandidateShip(
+    ship: Ship,
+    existingShips: Ship[],
+  ): Ship | undefined {
+    const maxAttempts = 100;
 
-    if (!isValid) {
-      return this._createValidCandidateShip(ship, existingShips);
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      const candidateConfig = this.createRandomShipConfig(ship);
+
+      if (this._placeShipService.canPlaceShip(candidateConfig, existingShips)) {
+        return this._shipService.createShip(candidateConfig);
+      }
     }
-
-    return this._shipService.createShip(candidateConfig);
+    return undefined; // Return undefined if a valid candidate ship cannot be created after maxAttempts
   }
 
   private _getRandomSize(): ShipSize {
