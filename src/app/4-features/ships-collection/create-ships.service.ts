@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Ship, ShipDirection, ShipService, ShipSize } from '@entities/ship';
-import { RandomShipService } from '@features/random-ship';
+import { RandomShipService } from './random-ship.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class CreateShipsService {
 
   public createRandomShips(): Ship[] {
     const initialShips = this._createInitialShips();
-    return this._randomService.randomizeShipsCollection(initialShips);
+    return this._randomService.repositionShipsRandomly(initialShips);
   }
 
   private _createInitialShips(): Ship[] {

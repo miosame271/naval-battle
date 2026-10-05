@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { BOARD_SIZE } from '../lib';
+import { BOARD_SIZE } from './board-size.token';
 import { Field, FieldService } from '@entities/field';
-import { ShipPosition } from '@entities/ship';
+import { Ship, ShipPosition } from '@entities/ship';
 import { Board } from '../model';
 
 @Injectable({
@@ -10,6 +10,13 @@ import { Board } from '../model';
 export class BoardService {
   private readonly _boardSize = inject(BOARD_SIZE);
   private readonly _fieldService = inject(FieldService);
+
+  public createBoard(ships?: Ship[]): Board {
+    return {
+      fields: this.createFields(),
+      ships: ships ?? [],
+    };
+  }
 
   public createFields(): Field[] {
     return Array.from(

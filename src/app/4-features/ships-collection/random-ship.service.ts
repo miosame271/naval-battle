@@ -5,8 +5,8 @@ import {
   ShipDirection,
   ShipPosition,
   Ship,
-  ShipService,
   ShipConfig,
+  ShipService,
 } from '@entities/ship';
 import { PlaceShipService } from '@features/ships-collection';
 import { UtilsService } from '@shared/lib';
@@ -41,7 +41,11 @@ export class RandomShipService {
     };
   }
 
-  public randomizeShipsCollection(ships: Ship[]): Ship[] {
+  public repositionShipsRandomly(ships: Ship[]): Ship[] {
+    return this._randomizeShips(ships);
+  }
+
+  public _randomizeShips(ships: Ship[]): Ship[] {
     const repositionedShips: Ship[] = [...ships];
 
     repositionedShips.forEach((ship) => {

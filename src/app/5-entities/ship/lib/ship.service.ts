@@ -72,7 +72,8 @@ export class ShipService {
   public hit(ship: Ship, position: ShipPosition): Ship {
     const changedShip = { ...ship };
     if (!this.isPositionHit(changedShip, position)) {
-      changedShip.hitPositions.push(position);
+      const hitPositions = [...changedShip.hitPositions, position];
+      changedShip.hitPositions = hitPositions;
     }
     return this.updateStatus(changedShip);
   }

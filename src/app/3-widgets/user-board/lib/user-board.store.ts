@@ -11,7 +11,7 @@ import { Field } from '@entities/field';
 import { Ship, ShipPosition } from '@entities/ship';
 import {
   CreateShipsService,
-  RepositionShipsService,
+  RandomShipService,
 } from '@features/ships-collection';
 
 const INITIAL_GAME_BOARD_STATE: GameBoardState = {
@@ -27,7 +27,7 @@ const INITIAL_GAME_BOARD_STATE: GameBoardState = {
 export class UserBoardStore {
   private readonly _boardService = inject(BoardService);
   private readonly _createShipsService = inject(CreateShipsService);
-  private readonly _repositionShipsService = inject(RepositionShipsService);
+  private readonly _randomShipService = inject(RandomShipService);
 
   private readonly _currentState: WritableSignal<GameBoardState> = signal(
     INITIAL_GAME_BOARD_STATE,
@@ -43,13 +43,13 @@ export class UserBoardStore {
   public readonly ships: Signal<Ship[]> = computed(() => this.board().ships);
 
   public createBoard(): void {
-    const fields = this._boardService.createFields();
-    const ships = this._repositionShipsService.repositionShipsRandomly(
+    const ships = this._randomShipService.repositionShipsRandomly(
       this._createShipsService.createRandomShips(),
     );
+    const board = this._boardService.createBoard(ships);
     this._currentState.update((state) => ({
       ...state,
-      board: { fields, ships },
+      board,
     }));
   }
 
