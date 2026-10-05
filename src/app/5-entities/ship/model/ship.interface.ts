@@ -1,3 +1,5 @@
+import { Position } from '@entities/position';
+
 export const ShipDirection = {
   Horizontal: 'horizontal',
   Vertical: 'vertical',
@@ -19,22 +21,17 @@ export const ShipSize = {
 } as const;
 export type ShipSize = (typeof ShipSize)[keyof typeof ShipSize];
 
-export interface ShipPosition {
-  row: number;
-  column: number;
-}
-
 export interface ShipConfig {
   size: ShipSize;
   direction: ShipDirection;
-  startPosition: ShipPosition;
+  startPosition: Position;
 }
 
 export interface Ship {
   id: string;
   size: ShipSize;
-  direction: ShipDirection;
-  startPosition: ShipPosition;
   status: ShipStatus;
-  hitPositions: ShipPosition[];
+  direction: ShipDirection;
+  startPosition: Position;
+  hitPositions: Position[];
 }

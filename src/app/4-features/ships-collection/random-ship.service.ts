@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { BOARD_SIZE } from '@entities/board';
+import { Position } from '@entities/position';
 import {
   ShipSize,
   ShipDirection,
-  ShipPosition,
   Ship,
   ShipConfig,
+  ShipService,
 } from '@entities/ship';
-import { ShipService } from '@entities/ship/lib/ship.service';
-import { PlaceShipService } from '@features/ships-collection';
+import { PlaceShipService } from './place-ship.service';
 import { UtilsService } from '@shared/lib';
 
 @Injectable({
@@ -96,7 +96,7 @@ export class RandomShipService {
   private _getRandomStartPosition(
     size: ShipSize,
     direction: ShipDirection,
-  ): ShipPosition {
+  ): Position {
     const maxRow =
       direction === ShipDirection.Vertical
         ? this._boardSize - size

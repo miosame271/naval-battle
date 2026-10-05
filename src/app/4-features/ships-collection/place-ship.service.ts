@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BOARD_SIZE } from '@entities/board';
-import { Ship, ShipConfig, ShipPosition, ShipService } from '@entities/ship';
+import { Position } from '@entities/position';
+import { Ship, ShipConfig, ShipService } from '@entities/ship';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class PlaceShipService {
     return ships.every((existingShip) => {
       const existingCells = this._shipService.getShipCells(existingShip);
 
-      return shipCells.every((shipCell: ShipPosition) =>
+      return shipCells.every((shipCell: Position) =>
         existingCells.every(
           (existingCell) =>
             Math.abs(shipCell.row - existingCell.row) > 1 ||

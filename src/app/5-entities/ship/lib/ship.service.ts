@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  Ship,
-  ShipDirection,
-  ShipConfig,
-  ShipStatus,
-  ShipPosition,
-} from '../model';
+import { Ship, ShipDirection, ShipConfig, ShipStatus } from '../model';
+import { Position } from '@entities/position';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +17,7 @@ export class ShipService {
     };
   }
 
-  public getShipCells(shipConfig: ShipConfig): ShipPosition[] {
+  public getShipCells(shipConfig: ShipConfig): Position[] {
     return Array.from({ length: shipConfig.size }, (_, index) => ({
       row:
         shipConfig.startPosition.row +
@@ -33,7 +28,7 @@ export class ShipService {
     }));
   }
 
-  public isPositionHit(ship: Ship, position: ShipPosition): boolean {
+  public isPositionHit(ship: Ship, position: Position): boolean {
     return ship.hitPositions.some(
       (hitPosition) =>
         hitPosition.row === position.row &&
@@ -65,11 +60,11 @@ export class ShipService {
     return changedShip;
   }
 
-  public fire(position: ShipPosition): void {
+  public fire(position: Position): void {
     // TODO: Implement fire logic
   }
 
-  public hit(ship: Ship, position: ShipPosition): Ship {
+  public hit(ship: Ship, position: Position): Ship {
     const changedShip = { ...ship };
     if (!this.isPositionHit(changedShip, position)) {
       const hitPositions = [...changedShip.hitPositions, position];

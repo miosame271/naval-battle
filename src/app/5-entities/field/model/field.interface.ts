@@ -1,7 +1,7 @@
-import { ShipPosition } from '@entities/ship';
+import { Position } from '@entities/position';
 
 export interface Field {
-  position: ShipPosition;
+  position: Position;
   hasShip: boolean;
   isHit: boolean;
 }

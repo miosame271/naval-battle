@@ -8,11 +8,9 @@ import {
 } from '@angular/core';
 import { Board, BoardService, GameBoardState } from '@entities/board';
 import { Field } from '@entities/field';
-import { Ship, ShipPosition } from '@entities/ship';
-import {
-  CreateShipsService,
-  RandomShipService,
-} from '@features/ships-collection';
+import { Position } from '@entities/position';
+import { Ship } from '@entities/ship';
+import { CreateShipsService } from '@features/ships-collection';
 
 const INITIAL_GAME_BOARD_STATE: GameBoardState = {
   board: {
@@ -27,25 +25,19 @@ const INITIAL_GAME_BOARD_STATE: GameBoardState = {
 export class UserBoardStore {
   private readonly _boardService = inject(BoardService);
   private readonly _createShipsService = inject(CreateShipsService);
-  private readonly _randomShipService = inject(RandomShipService);
 
   private readonly _currentState: WritableSignal<GameBoardState> = signal(
     INITIAL_GAME_BOARD_STATE,
   );
 
-  public readonly currentState: Signal<GameBoardState> = computed(() =>
-    this._currentState(),
-  );
   public readonly board: Signal<Board> = computed(
-    () => this.currentState().board,
+    () => this._currentState().board,
   );
   public readonly fields: Signal<Field[]> = computed(() => this.board().fields);
   public readonly ships: Signal<Ship[]> = computed(() => this.board().ships);
 
   public createBoard(): void {
-    const ships = this._randomShipService.repositionShipsRandomly(
-      this._createShipsService.createRandomShips(),
-    );
+    const ships = this._createShipsService.createRandomShips();
     const board = this._boardService.createBoard(ships);
     this._currentState.update((state) => ({
       ...state,
@@ -73,14 +65,14 @@ export class UserBoardStore {
     this._currentState.update((state) => ({ ...state, board: updatedBoard }));
   }
 
-  public isFieldOccupied(position: ShipPosition): boolean {
+  public isFieldOccupied(position: Position): boolean {
     return this._boardService.isFieldOccupied(
       this._currentState().board,
       position,
     );
   }
 
-  public isFieldHit(position: ShipPosition): boolean {
+  public isFieldHit(position: Position): boolean {
     return this._boardService.isFieldHit(this._currentState().board, position);
   }
 }

@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { BOARD_SIZE } from './board-size.token';
 import { Field, FieldService } from '@entities/field';
-import { Ship, ShipPosition } from '@entities/ship';
+import { Ship } from '@entities/ship';
 import { Board } from '../model';
+import { Position } from '@entities/position';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class BoardService {
     );
   }
 
-  public getField(board: Board, position: ShipPosition): Field | undefined {
+  public getField(board: Board, position: Position): Field | undefined {
     return board.fields.find(
       (field) =>
         field.position.row === position.row &&
@@ -50,7 +51,7 @@ export class BoardService {
     };
   }
 
-  public hitField(board: Board, position: ShipPosition): Board {
+  public hitField(board: Board, position: Position): Board {
     const field = this.getField(board, position);
 
     if (!field) {
@@ -60,12 +61,12 @@ export class BoardService {
     return this.updateField(board, this._fieldService.hit(field));
   }
 
-  public isFieldOccupied(board: Board, position: ShipPosition): boolean {
+  public isFieldOccupied(board: Board, position: Position): boolean {
     const field = this.getField(board, position);
     return field ? this._fieldService.isOccupied(field) : false;
   }
 
-  public isFieldHit(board: Board, position: ShipPosition): boolean {
+  public isFieldHit(board: Board, position: Position): boolean {
     const field = this.getField(board, position);
     return field ? this._fieldService.isHit(field) : false;
   }
