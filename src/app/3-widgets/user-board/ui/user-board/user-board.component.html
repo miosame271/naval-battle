@@ -1,3 +1,25 @@
-<p>
-  user-board works!
-</p>
+<section class="user-board">
+  <div
+    class="user-board__grid"
+    [style.--board-size]="boardSize"
+    aria-label="Игровая доска"
+  >
+    @for (field of fields(); track field.position.row + '-' + field.position.column) {
+      <div
+        class="user-board__cell"
+        [class.user-board__cell--ship]="field.hasShip"
+        [class.user-board__cell--hit]="field.isHit"
+      ></div>
+    }
+  </div>
+
+    @if (editable()) {
+      <button
+        class="user-board__button"
+        type="button"
+        (click)="repositionShips()"
+      >
+        Разместить корабли
+      </button>
+    }
+</section>

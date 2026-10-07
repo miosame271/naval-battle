@@ -1,0 +1,48 @@
+.user-board {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(100%, 600px);
+
+  &__button {
+    padding: 8px 16px;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--board-size), minmax(0, 1fr));
+    width: 100%;
+    aspect-ratio: 1;
+    border: 1px solid currentColor;
+  }
+
+  &__cell {
+    min-width: 0;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    background: transparent;
+
+    &--ship {
+      background: currentColor;
+    }
+
+    &--hit {
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        currentColor 4px,
+        currentColor 6px
+      );
+    }
+  }
+}

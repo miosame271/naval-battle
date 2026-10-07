@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BOARD_SIZE } from './board-size.token';
 import { Field, FieldService } from '@entities/field';
-import { Ship } from '@entities/ship';
+import { Ship, ShipService } from '@entities/ship';
 import { Board } from '../model';
 import { Position } from '@entities/position';
 
@@ -11,12 +11,32 @@ import { Position } from '@entities/position';
 export class BoardService {
   private readonly _boardSize = inject(BOARD_SIZE);
   private readonly _fieldService = inject(FieldService);
+  private readonly _shipService = inject(ShipService);
 
-  public createBoard(ships?: Ship[]): Board {
-    return {
+  public createBoard(ships: Ship[] = []): Board {
+    const board: Board = {
       fields: this.createFields(),
-      ships: ships ?? [],
+      ships,
     };
+
+    return ships.reduce(
+      (currentBoard, ship) =>
+        this._shipService
+          .getShipCells(ship)
+          .reduce((boardWithShip, position) => {
+            const field = this.getField(boardWithShip, position);
+
+            if (!field) {
+              return boardWithShip;
+            }
+
+            return this.updateField(
+              boardWithShip,
+              this._fieldService.setShip(field, true),
+            );
+          }, currentBoard),
+      board,
+    );
   }
 
   public createFields(): Field[] {
