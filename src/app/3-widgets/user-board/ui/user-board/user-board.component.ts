@@ -23,8 +23,8 @@ export class UserBoardComponent implements OnInit {
   public readonly editable = input.required<boolean>();
 
   private readonly _userBoardStore = inject(UserBoardStore);
-
   protected readonly boardSize = inject(BOARD_SIZE);
+
   protected readonly fields = computed(() => this._userBoardStore.fields());
   protected readonly ships = computed(() => this._userBoardStore.ships());
 

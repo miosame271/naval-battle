@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { GameSessionState } from '@entities/game-session';
 
-const INITIAL_GAME_SESSION_STATE: GameSessionState = {
+export const INITIAL_GAME_SESSION_STATE: GameSessionState = {
   gameStarted: false,
   loading: false,
   saving: false,
